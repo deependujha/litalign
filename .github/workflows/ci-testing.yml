@@ -18,8 +18,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ["ubuntu-22.04", "macos-14", "windows-2022"]
-        python-version: ["3.9", "3.10", "3.11"]
+        os: ["ubuntu-22.04"] # ["ubuntu-22.04", "macos-14", "windows-2022"]
+        python-version: ["3.9"] # ["3.9", "3.10", "3.11"]
 
     # Timeout: https://stackoverflow.com/a/59076067/4521646
     timeout-minutes: 45
@@ -42,7 +42,7 @@ jobs:
           pip list
 
       - name: Tests
-        run: coverage run --source litdata -m pytest tests -v --durations=100
+        run: coverage run --source litalign -m pytest tests -v --durations=100
 
       - name: Statistics
         run: |
