@@ -1,0 +1,1 @@
+{"config":{"lang":["en"],"separator":"[\\s\\-]+","pipeline":["stopWordFilter"]},"docs":[{"location":"","title":"LitAlign","text":"<p>Lightning-native library for fine-tuning LLMs using alignment techniques like PPO, DPO, GRPO and more.</p>"}]}
