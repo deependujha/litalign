@@ -494,9 +494,9 @@ ______________________________________________________________________
 ## 📖 Summary
 
 !!! note "overview"
-\- Proximal Policy Optimization (PPO) is a reinforcement learning algorithm that trains an agent to learn good behavior through interaction with its environment.
-\- It uses two neural networks: one to decide actions (the policy network) and another to estimate how good a state is (the value network).
-\- After collecting a batch of experiences by running the current policy, PPO computes how much better or worse the chosen actions were compared to what was expected (advantage).
-\- It then updates the policy in a way that improves it, but not too drastically — ensuring stability by limiting how much the new policy can diverge from the old one.
-\- To encourage exploration, it adds an entropy bonus, and it adjusts the learning rate gradually over time (linear annealing).
-\- PPO balances simplicity, performance, and stability, making it one of the most widely used algorithms in modern reinforcement learning.
+    - Proximal Policy Optimization (PPO) is a reinforcement learning algorithm that trains an agent to learn good behavior through interaction with its environment.
+    - It uses two neural networks: one to decide actions (the policy network) and another to estimate how good a state is (the value network).
+    - After collecting a batch of experiences by running the current policy, PPO computes how much better or worse the chosen actions were compared to what was expected (advantage).
+    - It then updates the policy in a way that improves it, but not too drastically — ensuring stability by limiting how much the new policy can diverge from the old one.
+    - To encourage exploration, it adds an entropy bonus, and it adjusts the learning rate gradually over time (linear annealing).
+    - PPO balances simplicity, performance, and stability, making it one of the most widely used algorithms in modern reinforcement learning.

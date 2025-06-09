@@ -195,22 +195,22 @@ ______________________________________________________________________
 
 !!! bug "we sum the probability of next tokens and then take the log, we take the log of each next token probability and then sum?"
 
-```
-In DPO (and most language modeling tasks), we **take the log of each token's probability and then sum** them.
+    ```
+    In DPO (and most language modeling tasks), we **take the log of each token's probability and then sum** them.
 
-### Why?
+    ### Why?
 
-Because the probability of the entire sequence is the **product** of individual token probabilities:
+    Because the probability of the entire sequence is the **product** of individual token probabilities:
 
-$$
-P(y \mid x) = P(y_1 \mid x) \cdot P(y_2 \mid x, y_1) \cdot P(y_3 \mid x, y_1, y_2) \cdots
-$$
+    $$
+    P(y \mid x) = P(y_1 \mid x) \cdot P(y_2 \mid x, y_1) \cdot P(y_3 \mid x, y_1, y_2) \cdots
+    $$
 
-Taking the log:
+    Taking the log:
 
-$$
-\log P(y \mid x) = \log P(y_1 \mid x) + \log P(y_2 \mid x, y_1) + \log P(y_3 \mid x, y_1, y_2) + \cdots
-$$
+    $$
+    \log P(y \mid x) = \log P(y_1 \mid x) + \log P(y_2 \mid x, y_1) + \log P(y_3 \mid x, y_1, y_2) + \cdots
+    $$
 
-So, you sum **log-probabilities per token** to get the **sequence-level log-probability**.
-```
+    So, you sum **log-probabilities per token** to get the **sequence-level log-probability**.
+    ```

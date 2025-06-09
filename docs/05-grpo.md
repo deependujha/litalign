@@ -1,10 +1,11 @@
 # 🧠 GRPO: Group Relative Policy Optimization
 
 !!! example "GRPO Overview"
-   my understanding of grpo is that it's very similar to ppo. Some changes are: it reintroduces explicit kl divergence term for loss, and replaces value model and instead rather than generating one response, it uses beam search to get K responses, and the group of K response is ranked relatively
-   - advantage of taken action a_i = (reward for a_i - mean reward for all the action(output))/std dev
+	my understanding of grpo is that it's very similar to ppo. Some changes are: it reintroduces explicit kl divergence term for loss, and replaces value model and instead rather than generating one response, it uses beam search to get K responses, and the group of K response is ranked relatively
 
-   rest all seems similar.
+	- advantage of taken action a_i = (reward for a_i - mean reward for all the action(output))/std dev
+
+	rest all seems similar.
 
 
 ## 🔍 What is GRPO?
