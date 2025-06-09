@@ -17,12 +17,13 @@ repos:
         exclude: README.md
       - id: check-json
       - id: check-yaml
+        exclude: ^mkdocs\.yml$
       - id: check-toml
       - id: check-docstring-first
       - id: check-executables-have-shebangs
       - id: check-case-conflict
       - id: check-added-large-files
-        args: ["--maxkb=350", "--enforce-all"]
+        args: ["--maxkb=1024", "--enforce-all"]
       - id: detect-private-key
 
   - repo: https://github.com/codespell-project/codespell

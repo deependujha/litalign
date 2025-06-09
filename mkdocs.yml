@@ -118,4 +118,9 @@ extra_javascript:
 # Page tree
 nav:
   - LitAlign:
-    - Home: index.md
+      - Home: index.md
+      - KL Divergence: 01-kl-divergence.md
+      - Entropy: 02-entropy.md
+      - PPO: 03-ppo.md
+      - DPO: 04-dpo.md
+      - GRPO: 05-grpo.md
