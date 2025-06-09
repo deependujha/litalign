@@ -5,26 +5,25 @@
 The **KL divergence** between two probability distributions $P$ and $Q$ is:
 
 $$
-D\_{\\text{KL}}(P || Q) = \\sum_x P(x) \\log \\frac{P(x)}{Q(x)}
+D_{\text{KL}}(P || Q) = \sum_x P(x) \log \frac{P(x)}{Q(x)}
 $$
 
 In the context of RL:
 
-- $P$: New (current) policy $\\pi\_\\theta$
-- $Q$: Old (reference) policy $\\pi\_{\\theta\_{\\text{old}}}$
+- $P$: New (current) policy $\pi\_\theta$
+- $Q$: Old (reference) policy $\pi\_{\theta\_{\text{old}}}$
 - Used to **penalize divergence** from a reference policy
 
 > - KL divergence yields how different two probability distributions are.
 > - Or, how much information is lost when $Q$ is used to approximate $P$.
 
 !!! danger "Note"
-    KL divergence is **not symmetric**: $D\_{\\text{KL}}(P || Q) \\neq D\_{\\text{KL}}(Q || P)$.
+    KL divergence is **not symmetric**: $D\_{\text{KL}}(P || Q) \neq D\_{\text{KL}}(Q || P)$.
     It measures how much information is lost when using $Q$ to approximate $P$. And vice versa.
 
 !!! warning "Important (GROK says:)"
     In the expression ( D\_{KL}(P||Q) ), the Kullback-Leibler (KL) divergence measures how much the probability distribution ( P ) diverges from the probability distribution ( Q ). Here's the breakdown:
 
-    ```
     - **\( P \)**: This is the "true" or "target" distribution, the one you consider as the reference or the actual distribution you want to approximate.
     - **\( Q \)**: This is the "approximating" distribution, the one you use to estimate or approximate \( P \).
 
@@ -53,7 +52,7 @@ In the context of RL:
     - The asymmetry arises because \( P(x) \log\left(\frac{P(x)}{Q(x)}\right) \) weighs the log-ratio by \( P(x) \), not \( Q(x) \), so swapping them changes the result.
 
     So, in \( D_{KL}(P||Q) \), \( Q \) is used to estimate \( P \).
-    ```
+
 
 ______________________________________________________________________
 

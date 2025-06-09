@@ -38,7 +38,7 @@ ______________________________________________________________________
 - For each generated response $y_i$ in group $G$, compute:
 
   $$
-  R(y_i) = \\text{reward model output}
+  R(y_i) = \text{reward model output}
   $$
 
 ### 4. **Groupwise Advantage Calculation**
@@ -46,13 +46,13 @@ ______________________________________________________________________
 For each response in group $G$:
 
 $$
-A_i = \\frac{R(y_i) - \\mu_G}{\\sigma_G}
+A_i = \frac{R(y_i) - \mu_G}{\sigma_G}
 $$
 
 Where:
 
-- $\\mu_G$ is the **mean** reward in group $G$
-- $\\sigma_G$ is the **standard deviation**
+- $\mu_G$ is the **mean** reward in group $G$
+- $\sigma_G$ is the **standard deviation**
 
 This normalizes rewards and allows the model to focus on **relative improvement**.
 
@@ -61,21 +61,21 @@ This normalizes rewards and allows the model to focus on **relative improvement*
 Use PPO’s clipped surrogate objective:
 
 $$
-L^{CLIP}(\\theta) = \\mathbb{E} \\left[ \\min \\left( r\_\\theta A_i, \\text{clip}(r\_\\theta, 1-\\epsilon, 1+\\epsilon) A_i \\right) \\right]
+L^{CLIP}(\theta) = \mathbb{E} \left[ \min \left( r\_\theta A_i, \text{clip}(r\_\theta, 1-\epsilon, 1+\epsilon) A_i \right) \right]
 $$
 
 Where:
 
-- $r\_\\theta = \\frac{\\pi\_\\theta(y_i)}{\\pi\_{\\text{old}}(y_i)}$
-- $\\pi\_\\theta$: updated policy
-- $\\pi\_{\\text{old}}$: policy before update
+- $r\_\theta = \frac{\pi\_\theta(y_i)}{\pi\_{\text{old}}(y_i)}$
+- $\pi\_\theta$: updated policy
+- $\pi\_{\text{old}}$: policy before update
 
 ### 6. **Optional KL Penalty**
 
 Some GRPO variants include an **explicit KL divergence penalty**:
 
 $$
-L\_{KL} = \\beta \\cdot \\text{KL}[\\pi\_\\theta || \\pi\_{\\text{ref}}]
+L\_{KL} = \beta \cdot \text{KL}[\pi\_\theta || \pi\_{\text{ref}}]
 $$
 
 Total Loss:
@@ -107,26 +107,26 @@ Then:
    This gives you relative advantages:
 
 $$
-A_i = \\frac{r_i - \\mu_r}{\\sigma_r + \\epsilon}
+A_i = \frac{r_i - \mu_r}{\sigma_r + \epsilon}
 $$
 
 3. **Compute log-probabilities**:
 
-   - $\\log \\pi\_\\theta(y_i|x)$: current policy
-   - $\\log \\pi\_{\\text{ref}}(y_i|x)$: reference policy (often frozen)
+   - $\log \pi\_\theta(y_i|x)$: current policy
+   - $\log \pi\_{\text{ref}}(y_i|x)$: reference policy (often frozen)
 
 4. **Compute surrogate objective**:
    For each $y_i$ in the group, compute the PPO-style clipped term with the normalized reward as the advantage:
 
 $$
-\\text{loss}_i = - \\min \\left( r_i \\cdot \\frac{\\pi_\\theta(y_i|x)}{\\pi\_{\\text{ref}}(y_i|x)}, \\text{clip}\\left(\\frac{\\pi\_\\theta(y_i|x)}{\\pi\_{\\text{ref}}(y_i|x)}, 1 - \\epsilon, 1 + \\epsilon \\right) \\cdot r_i \\right)
+\text{loss}_i = - \min \left( r_i \cdot \frac{\pi_\theta(y_i|x)}{\pi\_{\text{ref}}(y_i|x)}, \text{clip}\left(\frac{\pi\_\theta(y_i|x)}{\pi\_{\text{ref}}(y_i|x)}, 1 - \epsilon, 1 + \epsilon \right) \cdot r_i \right)
 $$
 
 5. **Sum over the group**:
    The total loss for one prompt is:
 
 $$
-\\mathcal{L}_{\\text{GRPO}}^{(x)} = \\sum_{i=1}^{K} \\text{loss}\_i
+\mathcal{L}_{\text{GRPO}}^{(x)} = \sum_{i=1}^{K} \text{loss}\_i
 $$
 
 6. **Average over batch**:

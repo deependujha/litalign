@@ -9,12 +9,12 @@
 - So, a natural idea is:
 
   $$
-  \\text{Surprise}(a) = \\frac{1}{P(a)}
+  \text{Surprise}(a) = \frac{1}{P(a)}
   $$
 
 But this isn't ideal:
 
-- If $P(a) = 1$, surprise should be 0 — but $\\frac{1}{1} = 1$, which doesn’t work.
+- If $P(a) = 1$, surprise should be 0 — but $\frac{1}{1} = 1$, which doesn’t work.
 - Instead, we define surprise using logarithms:
 
 ______________________________________________________________________
@@ -22,7 +22,7 @@ ______________________________________________________________________
 ### 📐 Surprise = Log Inverse Probability
 
 $$
-\\text{Surprise}(a) = \\log\\left(\\frac{1}{P(a)}\\right) = -\\log P(a)
+\text{Surprise}(a) = \log\left(\frac{1}{P(a)}\right) = -\log P(a)
 $$
 
 So, the less likely the action, the greater the surprise.
@@ -34,11 +34,11 @@ ______________________________________________________________________
 Entropy is the **expected surprise over all possible actions**:
 
 $$
-\\begin{align\*}
-\\text{Entropy}(\\pi) &= \\sum\_{a \\in \\mathcal{A}} P(a) \\cdot \\text{Surprise}(a) \\
-&= \\sum\_{a \\in \\mathcal{A}} P(a) \\cdot (-\\log P(a)) \\
-&= -\\sum\_{a \\in \\mathcal{A}} P(a) \\cdot \\log P(a)
-\\end{align\*}
+\begin{align*}
+\text{Entropy}(\pi) &= \sum_{a \in \mathcal{A}} P(a) \cdot \text{Surprise}(a) \\
+&= \sum_{a \in \mathcal{A}} P(a) \cdot (-\log P(a)) \\
+&= -\sum_{a \in \mathcal{A}} P(a) \cdot \log P(a)
+\end{align*}
 $$
 
 ______________________________________________________________________

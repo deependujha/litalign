@@ -1,38 +1,36 @@
-# 🚀 Proximal Policy Optimization (PPO)
+### 🧠 Proximal Policy Optimization (PPO)
 
-- PPO is an **online**, **actor-critic** reinforcement learning algorithm.
-- It builds on top of **vanilla policy gradient** → **TRPO** → and finally lands on a simpler, stable, and scalable variant called **PPO**.
+## 🚀 PPO Intuition & Flow
 
-______________________________________________________________________
+PPO is an **online**, **actor-critic** reinforcement learning algorithm.
+It builds on top of **vanilla policy gradient** → **TRPO** → and finally lands on a simpler, stable, and scalable variant called **PPO**.
+
+---
 
 ## 🎯 Starting Point: Vanilla Policy Gradient
 
-- **Policy network**: takes input state `s` and outputs a **distribution over actions**.
+* **Policy network**: takes input state `s` and outputs a **distribution over actions**.
 
-  - Discrete space → action probs
-  - Continuous space → mean & std for Gaussian
+  * Discrete space → action probs
+  * Continuous space → mean & std for Gaussian
 
-- **Value network**: takes state `s` and outputs **value estimate** $V(s)$.
+* **Value network**: takes state `s` and outputs **value estimate** $V(s)$.
   → *Not* Q(s, a)
 
-![ppo policy network](./images/ppo/ppo-policy-network.png)
-
-- After rollout (sampling actions from current policy), we compute:
+* After rollout (sampling actions from current policy), we compute:
 
 $$
-\\mathcal{L}\_{\\text{PG}} = -\\log(\\pi(a|s)) \\cdot A(s, a)
+\mathcal{L}_{\text{PG}} = -\log(\pi(a|s)) \cdot A(s, a)
 $$
-
-> PG stands for **policy gradient**.
 
 Where:
 
-- $A(s, a) = R - V(s)$ is the **advantage**
-- We want to increase likelihood of good actions (positive advantage)
+* $A(s, a) = R - V(s)$ is the **advantage**
+* We want to increase likelihood of good actions (positive advantage)
 
 > ℹ️ Minus sign is used because we minimize loss (PyTorch-style)
 
-______________________________________________________________________
+---
 
 ## ⚠️ Problem with Vanilla PG
 
@@ -41,23 +39,23 @@ then perform a large update (e.g., multiple gradient steps),
 → your policy can **drift too far** from the original behavior used to collect those rollouts.
 → Leads to instability and collapse.
 
-______________________________________________________________________
+---
 
 ## 🧱 TRPO: Trust Region Policy Optimization
 
 TRPO introduced a **trust region** to limit policy changes.
 
 $$
-\\max\_\\theta ; \\mathbb{E} \\left[ \\frac{\\pi\_\\theta(a|s)}{\\pi\_{\\theta\_{\\text{old}}}(a|s)} \\cdot A(s, a) \\right]
-\\quad \\text{s.t.} \\quad \\mathbb{E}_s \\left\[ \\text{KL}\[\\pi_{\\theta\_{\\text{old}}} \\parallel \\pi\_\\theta\] \\right\] \\leq \\delta
+\max_\theta \; \mathbb{E} \left[ \frac{\pi_\theta(a|s)}{\pi_{\theta_{\text{old}}}(a|s)} \cdot A(s, a) \right]
+\quad \text{s.t.} \quad \mathbb{E}_s \left[ \text{KL}[\pi_{\theta_{\text{old}}} \parallel \pi_\theta] \right] \leq \delta
 $$
 
-- KL divergence constraint ensures policy doesn’t diverge too much.
-- Uses **second-order optimization**, conjugate gradients, Fisher matrix to compute the `kl-divergence` constraint.
+* KL divergence constraint ensures policy doesn’t diverge too much.
+* Uses **second-order optimization**, conjugate gradients, Fisher matrix.
 
 > 🚫 Hard to implement and scale!
 
-______________________________________________________________________
+---
 
 ## ✅ PPO: Proximal Policy Optimization
 
@@ -66,92 +64,88 @@ PPO simplifies TRPO by:
 1. **Replacing hard KL constraint with a clipping mechanism**
 2. (Optional) Adding KL as a penalty term, or just tracking it
 
-______________________________________________________________________
+---
 
 ## 🔁 PPO Clipped Objective
 
 Define:
 
 $$
-r\_\\theta = \\frac{\\pi\_\\theta(a|s)}{\\pi\_{\\theta\_{\\text{old}}}(a|s)}
+r_\theta = \frac{\pi_\theta(a|s)}{\pi_{\theta_{\text{old}}}(a|s)}
 $$
 
 Clipped loss:
 
 $$
-\\mathcal{L}_{\\text{clip}} = \\mathbb{E} \\left\[ \\min \\left( r_\\theta A, ; \\text{clip}(r\_\\theta, 1 - \\epsilon, 1 + \\epsilon) A \\right) \\right\]
+\mathcal{L}_{\text{clip}} = \mathbb{E} \left[ \min \left( r_\theta A, \; \text{clip}(r_\theta, 1 - \epsilon, 1 + \epsilon) A \right) \right]
 $$
 
-- Clipping prevents large updates by flattening the objective if the new policy moves too far from old one.
-- Keeps learning stable without needing 2nd-order methods.
+* Clipping prevents large updates by flattening the objective if the new policy moves too far from old one.
+* Keeps learning stable without needing 2nd-order methods.
 
-______________________________________________________________________
+---
 
 ## 🧠 Full PPO Loss
 
 $$
-\\mathcal{L}_{\\text{PPO}} = -\\mathcal{L}_{\\text{clip}} + c_v \\cdot \\text{ValueLoss} - c_e \\cdot \\text{Entropy}
+\mathcal{L}_{\text{PPO}} = -\mathcal{L}_{\text{clip}} + c_v \cdot \text{ValueLoss} - c_e \cdot \text{Entropy}
 $$
 
 Where:
 
-- `clip_loss`: clipped surrogate objective (stabilizes policy updates)
-
-- `value_loss`:
+* `clip_loss`: clipped surrogate objective (stabilizes policy updates)
+* `value_loss`:
 
   $$
   (V(s) - R)^2
   $$
 
   Critic is trained to fit actual return.
-
 * `entropy_bonus`: encourages exploration
 
   $$
-  -\\sum \\pi(a|s) \\log \\pi(a|s)
+  -\sum \pi(a|s) \log \pi(a|s)
   $$
-
 * Coefficients $c_v$, $c_e$: hyperparameters
 
-______________________________________________________________________
+---
 
-## 🔀 PPO Variants w.r.t KL-Divergence
+## 🔀 PPO Variants w\.r.t KL-Divergence
 
-- **PPO-clip** (common):
+* **PPO-clip** (common):
   Only uses clipped objective. Monitors KL, but **doesn’t penalize it explicitly**.
 
-- **PPO-penalty**:
+* **PPO-penalty**:
   Adds KL divergence into the loss:
 
-$$
-\\mathcal{L} = \\mathcal{L}_{\\text{clip}} - \\beta \\cdot \\text{KL}(\\pi_{\\text{old}}, \\pi\_{\\theta})
-$$
+  $$
+  \mathcal{L} = \mathcal{L}_{\text{clip}} - \beta \cdot \text{KL}(\pi_{\text{old}}, \pi_{\theta})
+  $$
 
-Adaptively adjusts $\\beta$ if KL becomes too large or too small.
+  Adaptively adjusts $\beta$ if KL becomes too large or too small.
 
-- **Early stopping**:
+* **Early stopping**:
   Some PPO setups just **stop updates** early if KL gets too big.
 
-______________________________________________________________________
+---
 
 ## 🔍 Advantage Estimation
 
 PPO often uses **GAE (Generalized Advantage Estimation)**:
 
 $$
-A(s, a) = \\sum\_{l=0}^{T-t} (\\gamma \\lambda)^l \\cdot \\delta\_{t+l}
-\\quad \\text{where} \\quad \\delta_t = r_t + \\gamma V(s\_{t+1}) - V(s_t)
+A(s, a) = \sum_{l=0}^{T-t} (\gamma \lambda)^l \cdot \delta_{t+l}
+\quad \text{where} \quad \delta_t = r_t + \gamma V(s_{t+1}) - V(s_t)
 $$
 
-- Balances bias–variance tradeoff with $\\lambda \\in [0, 1]$
+* Balances bias–variance tradeoff with $\lambda \in [0, 1]$
 
-______________________________________________________________________
+---
 
 ## 🧪 Continuous Action Space
 
-- Actor network outputs **mean and log_std** for each action dim
-
-- Use Normal distribution to sample action:
+* Actor network outputs **mean and log\_std** for each action dim
+* Use Normal distribution to sample action:
 
   ```python
   dist = torch.distributions.Normal(mean, std)
@@ -160,7 +154,7 @@ ______________________________________________________________________
   entropy = dist.entropy().sum(dim=-1)
   ```
 
-______________________________________________________________________
+---
 
 ## ✅ Recap Summary
 

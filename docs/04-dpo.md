@@ -5,18 +5,18 @@
 ## Formula:
 
 $$
-\\mathcal{L}_{DPO} = - \\mathbb{E}_{x, y_w, y_l} \\left[ \\log \\sigma \\left(\\beta \\log \\frac{\\pi\_\\theta(y_w|x)}{\\pi\_{ref}(y_w|x)} - \\beta \\log \\frac{\\pi\_\\theta(y_l|x)}{\\pi\_{ref}(y_l|x)} \\right)\\right]
+\mathcal{L}_{DPO} = - \mathbb{E}_{x, y_w, y_l} \left[ \log \sigma \left(\beta \log \frac{\pi\_\theta(y_w|x)}{\pi\_{ref}(y_w|x)} - \beta \log \frac{\pi\_\theta(y_l|x)}{\pi\_{ref}(y_l|x)} \right)\right]
 $$
 
 the above loss function when being implemented replaces `division with subtraction`:
 
 $$
-\\mathcal{L}_{DPO} = - \\mathbb{E}_{x, y_w, y_l} \\left[ \\log \\sigma \\left( \\beta (\\log \\pi\_\\theta(y_w|x) - \\log \\pi\_{ref}(y_w|x)) - \\beta (\\log \\pi\_\\theta(y_l|x) - \\log \\pi\_{ref}(y_l|x)) \\right)\\right]
+\mathcal{L}_{DPO} = - \mathbb{E}_{x, y_w, y_l} \left[ \log \sigma \left( \beta (\log \pi\_\theta(y_w|x) - \log \pi\_{ref}(y_w|x)) - \beta (\log \pi\_\theta(y_l|x) - \log \pi\_{ref}(y_l|x)) \right)\right]
 $$
 
 ### 😉 log sigmoid
 
-$$ LogSigmoid (X) = \\log \\sigma(x) = \\log \\left( \\frac{1}{1 + e^{-x}} \\right ) $$
+$$ LogSigmoid (X) = \log \sigma(x) = \log \left( \frac{1}{1 + e^{-x}} \right ) $$
 
 ______________________________________________________________________
 
@@ -98,13 +98,13 @@ ______________________________________________________________________
 DPO loss:
 
 $$
-\\mathcal{L}_{DPO} = - \\mathbb{E}_{x, y_w, y_l} \\left[ \\log \\sigma \\left( \\beta \\cdot \\left( \\log \\frac{\\pi\_\\theta(y_w|x)}{\\pi\_\\text{ref}(y_w|x)} - \\log \\frac{\\pi\_\\theta(y_l|x)}{\\pi\_\\text{ref}(y_l|x)} \\right) \\right) \\right]
+\mathcal{L}_{DPO} = - \mathbb{E}_{x, y_w, y_l} \left[ \log \sigma \left( \beta \cdot \left( \log \frac{\pi\_\theta(y_w|x)}{\pi\_\text{ref}(y_w|x)} - \log \frac{\pi\_\theta(y_l|x)}{\pi\_\text{ref}(y_l|x)} \right) \right) \right]
 $$
 
 Using log identities:
 
 $$
-= - \\log \\sigma \\left( \\beta \\cdot \\left[ (\\log π_θ(y_w) - \\log π_θ(y_l)) - (\\log π_ref(y_w) - \\log π_ref(y_l)) \\right] \\right)
+= - \log \sigma \left( \beta \cdot \left[ (\log π_θ(y_w) - \log π_θ(y_l)) - (\log π_ref(y_w) - \log π_ref(y_l)) \right] \right)
 $$
 
 ______________________________________________________________________
@@ -114,7 +114,7 @@ ______________________________________________________________________
 We use:
 
 $$
-\\log \\sigma(z) = \\log \\left( \\frac{1}{1 + e^{-z}} \\right)
+\log \sigma(z) = \log \left( \frac{1}{1 + e^{-z}} \right)
 $$
 
 ### Intuition:
@@ -194,8 +194,6 @@ ______________________________________________________________________
 - Finally, we sum the log probabilities of all tokens in the response to get the log probability of the entire response to receive `log π(y | x)`.
 
 !!! bug "we sum the probability of next tokens and then take the log, we take the log of each next token probability and then sum?"
-
-    ```
     In DPO (and most language modeling tasks), we **take the log of each token's probability and then sum** them.
 
     ### Why?
@@ -213,4 +211,3 @@ ______________________________________________________________________
     $$
 
     So, you sum **log-probabilities per token** to get the **sequence-level log-probability**.
-    ```
