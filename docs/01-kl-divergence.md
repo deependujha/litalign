@@ -18,42 +18,42 @@ In the context of RL:
 > - Or, how much information is lost when $Q$ is used to approximate $P$.
 
 !!! danger "Note"
-KL divergence is **not symmetric**: $D\_{\\text{KL}}(P || Q) \\neq D\_{\\text{KL}}(Q || P)$.
-It measures how much information is lost when using $Q$ to approximate $P$. And vice versa.
+    KL divergence is **not symmetric**: $D\_{\\text{KL}}(P || Q) \\neq D\_{\\text{KL}}(Q || P)$.
+    It measures how much information is lost when using $Q$ to approximate $P$. And vice versa.
 
 !!! warning "Important (GROK says:)"
-In the expression ( D\_{KL}(P||Q) ), the Kullback-Leibler (KL) divergence measures how much the probability distribution ( P ) diverges from the probability distribution ( Q ). Here's the breakdown:
+    In the expression ( D\_{KL}(P||Q) ), the Kullback-Leibler (KL) divergence measures how much the probability distribution ( P ) diverges from the probability distribution ( Q ). Here's the breakdown:
 
-```
-- **\( P \)**: This is the "true" or "target" distribution, the one you consider as the reference or the actual distribution you want to approximate.
-- **\( Q \)**: This is the "approximating" distribution, the one you use to estimate or approximate \( P \).
+    ```
+    - **\( P \)**: This is the "true" or "target" distribution, the one you consider as the reference or the actual distribution you want to approximate.
+    - **\( Q \)**: This is the "approximating" distribution, the one you use to estimate or approximate \( P \).
 
-### Interpretation
-- \( D_{KL}(P||Q) \) quantifies the information loss when \( Q \) is used to approximate \( P \).
-- It is not symmetric, meaning \( D_{KL}(P||Q) \neq D_{KL}(Q||P) \), because the roles of the "true" and "approximating" distributions are not interchangeable.
+    ### Interpretation
+    - \( D_{KL}(P||Q) \) quantifies the information loss when \( Q \) is used to approximate \( P \).
+    - It is not symmetric, meaning \( D_{KL}(P||Q) \neq D_{KL}(Q||P) \), because the roles of the "true" and "approximating" distributions are not interchangeable.
 
-### Formula
-The KL divergence is defined as:
-$$
-\[
-D_{KL}(P||Q) = \sum_x P(x) \log\left(\frac{P(x)}{Q(x)}\right)
-\]
-$$
-(for discrete distributions), or
-$$
-\[
-D_{KL}(P||Q) = \int P(x) \log\left(\frac{P(x)}{Q(x)}\right) dx
-\]
-$$
-(for continuous distributions).
+    ### Formula
+    The KL divergence is defined as:
+    $$
+    \[
+    D_{KL}(P||Q) = \sum_x P(x) \log\left(\frac{P(x)}{Q(x)}\right)
+    \]
+    $$
+    (for discrete distributions), or
+    $$
+    \[
+    D_{KL}(P||Q) = \int P(x) \log\left(\frac{P(x)}{Q(x)}\right) dx
+    \]
+    $$
+    (for continuous distributions).
 
-### Key Points
-- \( P \) is the distribution you assume to be the true one.
-- \( Q \) is the distribution you use to model or estimate \( P \).
-- The asymmetry arises because \( P(x) \log\left(\frac{P(x)}{Q(x)}\right) \) weighs the log-ratio by \( P(x) \), not \( Q(x) \), so swapping them changes the result.
+    ### Key Points
+    - \( P \) is the distribution you assume to be the true one.
+    - \( Q \) is the distribution you use to model or estimate \( P \).
+    - The asymmetry arises because \( P(x) \log\left(\frac{P(x)}{Q(x)}\right) \) weighs the log-ratio by \( P(x) \), not \( Q(x) \), so swapping them changes the result.
 
-So, in \( D_{KL}(P||Q) \), \( Q \) is used to estimate \( P \).
-```
+    So, in \( D_{KL}(P||Q) \), \( Q \) is used to estimate \( P \).
+    ```
 
 ______________________________________________________________________
 

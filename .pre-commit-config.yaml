@@ -44,17 +44,6 @@ repos:
         args: ["--fix"]
       - id: ruff-format
 
-  - repo: https://github.com/executablebooks/mdformat
-    rev: 0.7.22
-    hooks:
-      - id: mdformat
-        additional_dependencies:
-          - mdformat-gfm
-          #- mdformat-black
-          - mdformat_frontmatter
-        args: ["--number"]
-        exclude: README.md
-
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.1.0
     hooks:
