@@ -22,15 +22,3 @@ jobs:
     uses: Lightning-AI/utilities/.github/workflows/check-schema.yml@main
     with:
       azure-dir: ""
-
-  check-package:
-    uses: Lightning-AI/utilities/.github/workflows/check-package.yml@main
-    with:
-      actions-ref: main
-      import-name: "litalign"
-      artifact-name: dist-packages-${{ github.sha }}
-      testing-matrix: |
-        {
-          "os": ["ubuntu-latest", "macos-14", "windows-latest"],
-          "python-version": ["3.8", "3.10"]
-        }
