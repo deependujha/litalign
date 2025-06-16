@@ -1,0 +1,41 @@
+# code taken from: https://github.com/Lightning-AI/litData/blob/main/.github/workflows/ci-checks.yml
+
+name: General checks
+
+on:
+  push:
+    branches: [main, "release/*"]
+  pull_request:
+    branches: [main, "release/*"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.head_ref }}
+  cancel-in-progress: ${{ ! (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')) }}
+
+jobs:
+  check-typing:
+    uses: Lightning-AI/utilities/.github/workflows/check-typing.yml@main
+    with:
+      actions-ref: main
+
+  check-schema:
+    uses: Lightning-AI/utilities/.github/workflows/check-schema.yml@main
+    with:
+      azure-dir: ""
+
+  check-package:
+    uses: Lightning-AI/utilities/.github/workflows/check-package.yml@main
+    with:
+      actions-ref: main
+      import-name: "litdata"
+      artifact-name: dist-packages-${{ github.sha }}
+      testing-matrix: |
+        {
+          "os": ["ubuntu-latest", "macos-14", "windows-latest"],
+          "python-version": ["3.8", "3.10"]
+        }
+
+  check-docs:
+    uses: Lightning-AI/utilities/.github/workflows/check-docs.yml@main
+    with:
+      requirements-file: "requirements/docs.txt"
