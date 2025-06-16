@@ -11,13 +11,13 @@ class BaseTrainer(ABC):
         """
 
     @abstractmethod
-    def rollout(self, batch):
+    def rollout(self, batch) -> None:
         pass
 
     @abstractmethod
-    def evaluate(self, batch, responses):
+    def evaluate(self, batch, responses) -> None:
         pass
 
     @abstractmethod
-    def optimize(self, batch, responses, rewards):
+    def optimize(self, batch, responses, rewards) -> None:
         pass

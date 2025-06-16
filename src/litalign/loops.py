@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from torch.utils.data import DataLoader
 
 from litalign.trainer import BaseTrainer
@@ -11,7 +13,7 @@ class Loop:
         self.epoch = 0
         self.step_count = 0
 
-    def step(self):
+    def step(self) -> Dict[str, Any]:
         try:
             batch = next(self.iterator)
         except StopIteration:
