@@ -1,10 +1,5 @@
 .PHONY: test clean docs install-pre-commit install-dependencies setup
 
-# to imitate SLURM set only single node
-export SLURM_LOCALID=0
-# assume you have installed need packages
-export SPHINX_MOCK_REQUIREMENTS=0
-
 setup: install-dependencies install-pre-commit
 	@echo "==================== Setup Finished ===================="
 	@echo "All set! Ready to go!"
