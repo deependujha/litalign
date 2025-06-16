@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://deependujha.github.io/litalign/</loc>
+         <lastmod>2025-06-16</lastmod>
+    </url>
+    <url>
+         <loc>https://deependujha.github.io/litalign/01-kl-divergence/</loc>
+         <lastmod>2025-06-16</lastmod>
+    </url>
+    <url>
+         <loc>https://deependujha.github.io/litalign/02-entropy/</loc>
+         <lastmod>2025-06-16</lastmod>
+    </url>
+    <url>
+         <loc>https://deependujha.github.io/litalign/03-ppo/</loc>
+         <lastmod>2025-06-16</lastmod>
+    </url>
+    <url>
+         <loc>https://deependujha.github.io/litalign/04-dpo/</loc>
+         <lastmod>2025-06-16</lastmod>
+    </url>
+    <url>
+         <loc>https://deependujha.github.io/litalign/05-grpo/</loc>
+         <lastmod>2025-06-16</lastmod>
+    </url>
+</urlset>
