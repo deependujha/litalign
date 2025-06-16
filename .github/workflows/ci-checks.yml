@@ -27,7 +27,7 @@ jobs:
     uses: Lightning-AI/utilities/.github/workflows/check-package.yml@main
     with:
       actions-ref: main
-      import-name: "litdata"
+      import-name: "litalign"
       artifact-name: dist-packages-${{ github.sha }}
       testing-matrix: |
         {
